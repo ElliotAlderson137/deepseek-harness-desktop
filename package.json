@@ -1,0 +1,83 @@
+{
+  "name": "dsh-desktop-electron",
+  "productName": "DeepSeek Harness Desktop",
+  "version": "1.0.0",
+  "description": "DeepSeek Harness 桌面版，左侧栏 deepseek_chat 一键切入官方免费聊天，内置必需环境和插件市场。用起来只能说我欲成仙，快乐齐天",
+  "main": "main.js",
+  "author": {
+    "name": "ElliotAlderson137",
+    "url": "https://github.com/ElliotAlderson137"
+  },
+  "license": "MIT",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ElliotAlderson137/deepseek-harness-desktop.git"
+  },
+  "homepage": "https://github.com/ElliotAlderson137/deepseek-harness-desktop",
+  "bugs": {
+    "url": "https://github.com/ElliotAlderson137/deepseek-harness-desktop/issues"
+  },
+  "scripts": {
+    "start": "electron .",
+    "icon": "node scripts/make-icon.mjs",
+    "prep:runtime": "node scripts/prep-runtime.mjs",
+    "verify:bundled-market": "node scripts/verify-bundled-market.cjs",
+    "dist:dir": "npm run prep:runtime && electron-builder --win dir",
+    "dist:portable": "npm run prep:runtime && electron-builder --win portable",
+    "dist:setup": "npm run prep:runtime && electron-builder --win nsis"
+  },
+  "build": {
+    "appId": "com.dsh.desktop",
+    "productName": "DeepSeek Harness Desktop",
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "console-preload.js",
+      "server/**",
+      "shell/**",
+      "package.json",
+      "chat-preload.js",
+      "build/icon.ico"
+    ],
+    "extraResources": [
+      {
+        "from": "runtime-src/node_modules",
+        "to": "dsh-runtime/node_modules"
+      },
+      {
+        "from": "vendor/pnpm",
+        "to": "pnpm"
+      }
+    ],
+    "win": {
+      "icon": "build/icon.ico",
+      "target": [
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "portable": {
+      "artifactName": "DeepSeek-Harness-Desktop-${version}-portable.exe"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "perMachine": false,
+      "artifactName": "DeepSeek-Harness-Desktop-Setup-${version}.exe"
+    },
+    "electronDist": "node_modules/electron/dist"
+  },
+  "devDependencies": {
+    "electron": "^44.1.1",
+    "electron-builder": "^26.15.3"
+  }
+}
