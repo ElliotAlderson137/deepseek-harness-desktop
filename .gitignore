@@ -1,0 +1,12 @@
+# dependencies / build outputs (keep the repo lean when publishing)
+node_modules/
+dist/
+runtime-src/
+.scratch/
+vendor/
+
+# logs & temp
+*.log
+*.tmp
+.DS_Store
+Thumbs.db
